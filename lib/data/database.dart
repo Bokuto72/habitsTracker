@@ -7,10 +7,13 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseManager{
   static const dbName = "tracker.db";
   static const databaseVersion = 1;
+
   // DB tables;
   static const tableUsers = "users";
   static const tableTasks = "tasks";
   static const tableCategories = "categories";
+  static const tableUserRewards = "user_rewards";
+  static const tableRewards = "rewards";
 
   DatabaseManager._privateConstructor();
   static final DatabaseManager instance = DatabaseManager._privateConstructor();
@@ -54,6 +57,17 @@ class DatabaseManager{
             color VARCHAR(7) NOT NULL,
           )
           ''');
+    await db.execute('''
+          CREATE TABLE $tableUserRewards (
+            id INTEGER,
+            PRIMARY KEY (id),
+            FOREIGN KEY (id) REFERENCES $tableRewards (id)
+          ''');
+    await db.execute('''
+          CREATE TABLE $tableRewards (
+            id INTEGER PRIMARY KEY,
+            value INTEGER NOT NULL,
+            name VARCHAR(50) NOT NULL
+          ''');
   }
-
 }
