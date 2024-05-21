@@ -1,5 +1,5 @@
 
-import 'package:habits_tracker/entity/reward.dart';
+import 'package:habits_tracker/data/models/reward.dart';
 
 class User {
   User({
@@ -15,4 +15,6 @@ class User {
   final int? xp;
   final int? health;
   final List<Reward>? rewards;
+
+
 }
