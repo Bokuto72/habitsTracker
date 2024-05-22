@@ -14,6 +14,7 @@ class DatabaseManager{
   static const tableCategories = "categories";
   static const tableUserRewards = "user_rewards";
   static const tableRewards = "rewards";
+  static const tableAgenda = "agenda";
 
   DatabaseManager._privateConstructor();
   static final DatabaseManager instance = DatabaseManager._privateConstructor();
@@ -69,5 +70,46 @@ class DatabaseManager{
             value INTEGER NOT NULL,
             name VARCHAR(50) NOT NULL
           ''');
+    await db.execute('''
+          CREATE TABLE $tableAgenda (
+            id INTEGER,
+            PRIMARY KEY (id),
+            FOREIGN KEY (id) REFERENCES $tableTasks (id)
+          ''');
+  }
+
+  //======
+  // CRUD
+  //======
+
+  // CREATE
+  Future<int> insert(String tableName, Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(tableName, row);
+  }
+
+  // READ (all rows)
+  Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
+    Database db = await instance.database;
+    return await db.query(tableName);
+  }
+
+  // READ (row count)
+  Future<int> queryRowCount(String tableName) async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName')) ?? 0;
+  }
+
+  // UPDATE
+  Future<int> update(String tableName, Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    int id = row['id'];
+    return await db.update(tableName, row, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // DELETE
+  Future<int> delete(String tableName, int id) async {
+    Database db = await instance.database;
+    return await db.delete(tableName, where: 'id = ?', whereArgs: [id]);
   }
 }
