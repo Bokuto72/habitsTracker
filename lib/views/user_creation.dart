@@ -14,8 +14,7 @@ class _UserCreationState extends State<UserCreation> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Text("Création d'utilisateur");
   }
   
 }

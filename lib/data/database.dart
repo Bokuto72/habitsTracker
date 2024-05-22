@@ -41,21 +41,29 @@ class DatabaseManager{
             pseudo VARCHAR(50) NOT NULL,
             level INTEGER NOT NULL,
             xp INTEGER NOT NULL,
-            health INTEGER NOT NULL 
-          )
-          ''');
-    await db.execute('''
-          CREATE TABLE $tableTasks (
-            id INTEGER PRIMARY KEY,
-            label VARCHAR(250) NOT NULL,
-            id_category INTEGER FOREIGN KEY REFERENCES $tableCategories (id)
+            health INTEGER NOT NULL
           )
           ''');
     await db.execute('''
           CREATE TABLE $tableCategories (
             id INTEGER PRIMARY KEY,
             name VARCHAR(50) NOT NULL,
-            color VARCHAR(7) NOT NULL,
+            color VARCHAR(8) NOT NULL
+          )
+          ''');
+    await db.execute('''
+          CREATE TABLE $tableTasks (
+            id INTEGER PRIMARY KEY,
+            label VARCHAR(250) NOT NULL,
+            id_category INTEGER NOT NULL,
+            FOREIGN KEY (id) REFERENCES $tableCategories (id)
+          )
+          ''');
+    await db.execute('''
+          CREATE TABLE $tableRewards (
+            id INTEGER PRIMARY KEY,
+            value INTEGER NOT NULL,
+            name VARCHAR(50) NOT NULL
           )
           ''');
     await db.execute('''
@@ -63,18 +71,14 @@ class DatabaseManager{
             id INTEGER,
             PRIMARY KEY (id),
             FOREIGN KEY (id) REFERENCES $tableRewards (id)
-          ''');
-    await db.execute('''
-          CREATE TABLE $tableRewards (
-            id INTEGER PRIMARY KEY,
-            value INTEGER NOT NULL,
-            name VARCHAR(50) NOT NULL
+          )
           ''');
     await db.execute('''
           CREATE TABLE $tableAgenda (
             id INTEGER,
             PRIMARY KEY (id),
             FOREIGN KEY (id) REFERENCES $tableTasks (id)
+          )
           ''');
   }
 
