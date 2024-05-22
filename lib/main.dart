@@ -16,13 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? page;
 
-    // TODO
     //S'il n'y a pas d'user enregistré,
     //=> page de création de compte.
     //Après création de compte ou si un compte est enregistré,
     //=> page d'accueil standard.
 
-    final dbHelper = DatabaseManager.instance;
+    DatabaseManager dbHelper = DatabaseManager.instance;
     if(dbHelper.queryRowCount("tableUsers") == 0) {
       page = const UserCreation();
     } else {
