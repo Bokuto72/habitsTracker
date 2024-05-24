@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:habits_tracker/views/home.dart';
 import 'package:habits_tracker/views/user_creation.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'data/database.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseManager.instance.database;
   runApp(const MyApp());
 }
 
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
     //=> page d'accueil standard.
 
     DatabaseManager dbHelper = DatabaseManager.instance;
-    if(dbHelper.queryRowCount("tableUsers") == 0) {
+    if(dbHelper.queryRowCount("tableUsers").then((value) {return value;}) == 0) {
       page = const UserCreation();
     } else {
       page = const HomePage();

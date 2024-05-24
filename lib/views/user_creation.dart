@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:habits_tracker/controllers/user_controller.dart';
+import 'package:habits_tracker/data/database.dart';
 
 class UserCreation extends StatefulWidget {
   const UserCreation({super.key});
@@ -10,6 +11,7 @@ class UserCreation extends StatefulWidget {
 }
 
 class _UserCreationState extends State<UserCreation> {
+  DatabaseManager databaseManager = DatabaseManager.instance;
   UserController userController = UserController();
 
   @override

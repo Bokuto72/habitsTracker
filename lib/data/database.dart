@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseManager{
-  static const dbName = "tracker.db";
+class DatabaseManager {
+  static const dbName = 'tracker.db';
   static const databaseVersion = 1;
 
   // DB tables;
@@ -16,7 +16,6 @@ class DatabaseManager{
   static const tableRewards = "rewards";
   static const tableAgenda = "agenda";
 
-  DatabaseManager._privateConstructor();
   static final DatabaseManager instance = DatabaseManager._internal();
 
   static Database? _database;
@@ -32,32 +31,38 @@ class DatabaseManager{
     return _database!;
   }
 
-  _initDatabase() async {
-    String path = join(await getDatabasesPath(), dbName);
-    return await openDatabase(path,
-        version: databaseVersion, onCreate: _onCreate);
+  Future<Database> _initDatabase() async {
+    final databasePath = await getDatabasesPath();
+    final path = join(databasePath, dbName);
+    print("salut");
+    return await openDatabase(
+        path,
+        version: databaseVersion,
+        onCreate: _onCreate,
+    );
   }
 
-  Future _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
+    print("jinbe");
     await db.execute('''
           CREATE TABLE $tableUsers (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             pseudo VARCHAR(50) NOT NULL,
             level INTEGER NOT NULL,
             xp INTEGER NOT NULL,
             health INTEGER NOT NULL
           )
-          ''');
+          ''');/*
     await db.execute('''
           CREATE TABLE $tableCategories (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR(50) NOT NULL,
             color VARCHAR(8) NOT NULL
           )
           ''');
     await db.execute('''
           CREATE TABLE $tableTasks (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             label VARCHAR(250) NOT NULL,
             id_category INTEGER NOT NULL,
             FOREIGN KEY (id) REFERENCES $tableCategories (id)
@@ -65,7 +70,7 @@ class DatabaseManager{
           ''');
     await db.execute('''
           CREATE TABLE $tableRewards (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             value INTEGER NOT NULL,
             name VARCHAR(50) NOT NULL
           )
@@ -83,7 +88,7 @@ class DatabaseManager{
             PRIMARY KEY (id),
             FOREIGN KEY (id) REFERENCES $tableTasks (id)
           )
-          ''');
+          ''');*/
   }
 
   //======
@@ -91,28 +96,30 @@ class DatabaseManager{
   //======
 
   // CREATE
-  Future<int> insert(String tableName, Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    return await db.insert(tableName, row);
+  Future<void> insert(String tableName, Map<String, dynamic> row) async {
+    final db = await instance.database;
+    await db.insert(tableName, row);
   }
 
   // READ (all rows)
   Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
-    Database db = await instance.database;
-    return await db.query(tableName);
+    final db = await instance.database;
+    final List<Map<String, Object?>> maps = await db.query(tableName);
+    return maps;
   }
 
   // READ (row count)
   Future<int> queryRowCount(String tableName) async {
-    Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName')) ?? 0;
+    final db = await instance.database;
+    final nbOfRows = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tableName')) ?? 0;
+    return nbOfRows;
   }
 
   // UPDATE
-  Future<int> update(String tableName, Map<String, dynamic> row) async {
-    Database db = await instance.database;
+  Future<void> update(String tableName, Map<String, dynamic> row) async {
+    final db = await instance.database;
     int id = row['id'];
-    return await db.update(tableName, row, where: 'id = ?', whereArgs: [id]);
+    await db.update(tableName, row, where: 'id = ?', whereArgs: [id]);
   }
 
   // DELETE
