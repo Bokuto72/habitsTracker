@@ -15,6 +15,11 @@ class _UserCreationState extends State<UserCreation> {
   UserController userController = UserController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text("Création d'utilisateur");
   }

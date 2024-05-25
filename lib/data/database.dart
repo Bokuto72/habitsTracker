@@ -16,11 +16,11 @@ class DatabaseManager {
   static const tableRewards = "rewards";
   static const tableAgenda = "agenda";
 
-  static final DatabaseManager instance = DatabaseManager._internal();
+  static final DatabaseManager instance = DatabaseManager._init();
 
   static Database? _database;
 
-  DatabaseManager._internal();
+  DatabaseManager._init();
 
   Future<Database> get database async {
     if(_database != null) {
@@ -52,7 +52,7 @@ class DatabaseManager {
             xp INTEGER NOT NULL,
             health INTEGER NOT NULL
           )
-          ''');/*
+          ''');
     await db.execute('''
           CREATE TABLE $tableCategories (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,7 +88,7 @@ class DatabaseManager {
             PRIMARY KEY (id),
             FOREIGN KEY (id) REFERENCES $tableTasks (id)
           )
-          ''');*/
+          ''');
   }
 
   //======
