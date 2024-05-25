@@ -1,10 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:habits_tracker/data/models/user.dart';
 
 import '../data/database.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, User? user});
 
   @override
   State<HomePage> createState() => _HomePageState();
