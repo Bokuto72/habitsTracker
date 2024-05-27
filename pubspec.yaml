@@ -38,6 +38,8 @@ dependencies:
   sqflite: ^2.3.3+1
   path: ^1.9.0
   flutter_bloc: ^8.1.5
+  table_calendar: ^3.1.1
+  calendar_view: ^1.2.0
 
 dev_dependencies:
   flutter_test:
