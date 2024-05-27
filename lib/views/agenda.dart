@@ -30,7 +30,7 @@ class _AgendaPageState extends State<AgendaPage> {
             focusedDay: today,
             firstDay: DateTime.utc(2015, 1, 1),
             lastDay: DateTime.utc(2030, 1, 1),
-            calendarFormat: CalendarFormat.,
+            calendarFormat: CalendarFormat.week,
           ),
         )
       ],
