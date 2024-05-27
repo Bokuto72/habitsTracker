@@ -1,63 +1,74 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_tracker/data/models/user.dart';
+import 'package:habits_tracker/views/agenda.dart';
+import 'package:habits_tracker/views/dashboard.dart';
+import 'package:habits_tracker/views/rewards.dart';
+import 'package:habits_tracker/views/tasks.dart';
 
 import '../data/database.dart';
+import 'components/bottom_navbar.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key, User? user});
-
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => BottomNavbar(),
+      child: HomePageContent(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageContent extends StatefulWidget {
+
+  @override
+  State<HomePageContent> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePageContent> {
   DatabaseManager dbManager = DatabaseManager.instance;
 
-  int _currentIndex = 0;
-  List<Widget> body = const [
-    Icon(Icons.home),
-    Icon(Icons.calendar_month),
-    Icon(Icons.add),
-    Icon(Icons.attach_money)
+  final _pageNavigation = [
+    const DashboardPage(),
+    const TasksPage(),
+    const AgendaPage(),
+    const RewardsPage()
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: body[_currentIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (int newIndex) {
-          setState(() {
-            _currentIndex = newIndex;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: 'Accueil',
-            icon : Icon(Icons.home)
-          ),
-          BottomNavigationBarItem(
-            label: 'Agenda',
-            icon : Icon(Icons.calendar_month)
-          ),
-          BottomNavigationBarItem(
-            label: 'Ajouter',
-            icon : Icon(Icons.add)
-          ),
-          BottomNavigationBarItem(
-            label: 'Rewards',
-            icon : Icon(Icons.attach_money)
-          )
-        ],
-      ),
+    return BlocBuilder<BottomNavbar, int>(
+      builder: (context, state) {
+        return Scaffold(
+          body: _buildBody(state),
+          bottomNavigationBar: _buildBottomNav(),
+        );
+      },
     );
   }
 
+  Widget _buildBody(int index) {
+    return _pageNavigation.elementAt(index);
+  }
 
+  Widget _buildBottomNav() {
+    return BottomNavigationBar(
+      currentIndex: context.read<BottomNavbar>().state,
+      type: BottomNavigationBarType.fixed,
+      onTap: _getChangeBottomNav,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
+        BottomNavigationBarItem(icon: Icon(Icons.check_box), label: "Tâches"),
+        BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Agenda"),
+        BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: "Recompenses"),
+      ],
+    );
+  }
 
+  void _getChangeBottomNav(int index) {
+    context.read<BottomNavbar>().updateIndex(index);
+  }
 }

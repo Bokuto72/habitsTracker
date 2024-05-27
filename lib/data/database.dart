@@ -89,6 +89,10 @@ class DatabaseManager {
             FOREIGN KEY (id) REFERENCES $tableTasks (id)
           )
           ''');
+    await db.execute('''
+          INSERT INTO $tableRewards (value, name) VALUES (100, 'Médaille de bronze'),
+          (250, 'Médaille d argent'), (500, 'Médaille d or')
+          ''');
   }
 
   //======
