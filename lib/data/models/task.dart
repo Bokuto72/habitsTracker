@@ -6,11 +6,11 @@ class Task {
     this.id,
     this.label,
     this.category,
-    this.hour
+    this.deadline
   });
 
   final int? id;
   final String? label;
   final Category? category;
-  final String? hour;
+  final String? deadline;
 }

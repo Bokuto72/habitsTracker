@@ -34,7 +34,6 @@ class DatabaseManager {
   Future<Database> _initDatabase() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, dbName);
-    print("salut");
     return await openDatabase(
         path,
         version: databaseVersion,
@@ -43,7 +42,6 @@ class DatabaseManager {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    print("jinbe");
     await db.execute('''
           CREATE TABLE $tableUsers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
