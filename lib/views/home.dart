@@ -38,6 +38,9 @@ class _HomePageState extends State<HomePageContent> {
     const RewardsPage()
   ];
 
+  // TODO
+  // Afficher le dashboard en haut;
+  // la page choisie par la navbar en bas.
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavbar, int>(

@@ -62,8 +62,10 @@ class DatabaseManager {
           CREATE TABLE $tableTasks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             label VARCHAR(250) NOT NULL,
-            id_category INTEGER NOT NULL,
-            FOREIGN KEY (id) REFERENCES $tableCategories (id)
+            desc VARCHAR(250) NOT NULL,
+            category INTEGER,
+            deadline VARCHAR(250),
+            FOREIGN KEY (category) REFERENCES $tableCategories (id)
           )
           ''');
     await db.execute('''
