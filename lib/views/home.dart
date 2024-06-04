@@ -13,6 +13,7 @@ import 'components/bottom_navbar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key, User? user});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -23,7 +24,6 @@ class HomePage extends StatelessWidget {
 }
 
 class HomePageContent extends StatefulWidget {
-
   @override
   State<HomePageContent> createState() => _HomePageState();
 }
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePageContent> {
   DatabaseManager dbManager = DatabaseManager.instance;
 
   final _pageNavigation = [
-    const DashboardPage(),
+    //const DashboardPage(),
     const TasksPage(),
     const AgendaPage(),
     const RewardsPage()
@@ -46,7 +46,17 @@ class _HomePageState extends State<HomePageContent> {
     return BlocBuilder<BottomNavbar, int>(
       builder: (context, state) {
         return Scaffold(
-          body: _buildBody(state),
+          body: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: const DashboardPage(),
+              ),
+              Expanded(
+                  child: _buildBody(state)
+              )
+            ],
+          ),
           bottomNavigationBar: _buildBottomNav(),
         );
       },
@@ -63,7 +73,7 @@ class _HomePageState extends State<HomePageContent> {
       type: BottomNavigationBarType.fixed,
       onTap: _getChangeBottomNav,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
+        //BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
         BottomNavigationBarItem(icon: Icon(Icons.check_box), label: "Tâches"),
         BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Agenda"),
         BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: "Recompenses"),

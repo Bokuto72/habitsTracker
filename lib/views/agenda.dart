@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:calendar_view/calendar_view.dart';
 
 class AgendaPage extends StatefulWidget {
   const AgendaPage({super.key});
@@ -16,24 +17,19 @@ class _AgendaPageState extends State<AgendaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Agenda")
+        title: Text("Agenda"),
       ),
-      body: content(),
-    );
-  }
-
-  Widget content() {
-    return Column(
-      children: [
-        Container(
-          child: TableCalendar(
-            focusedDay: today,
-            firstDay: DateTime.utc(2015, 1, 1),
-            lastDay: DateTime.utc(2030, 1, 1),
-            calendarFormat: CalendarFormat.week,
+      body: CalendarControllerProvider(
+        controller: EventController(),
+        child: Scaffold(
+          body: DayView(
+            minDay: DateTime(2020),
+            maxDay: DateTime(2050),
+            initialDay: today,
           ),
         )
-      ],
+      )
     );
   }
 }
+
