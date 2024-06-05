@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_tracker/data/models/user.dart';
 import 'package:habits_tracker/views/agenda.dart';
 import 'package:habits_tracker/views/dashboard.dart';
+import 'package:habits_tracker/views/habits.dart';
 import 'package:habits_tracker/views/rewards.dart';
 import 'package:habits_tracker/views/tasks.dart';
 
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePageContent> {
   final _pageNavigation = [
     //const DashboardPage(),
     const TasksPage(),
+    const HabitsPage(),
     const AgendaPage(),
     const RewardsPage()
   ];
@@ -73,8 +75,8 @@ class _HomePageState extends State<HomePageContent> {
       type: BottomNavigationBarType.fixed,
       onTap: _getChangeBottomNav,
       items: const [
-        //BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
         BottomNavigationBarItem(icon: Icon(Icons.check_box), label: "Tâches"),
+        BottomNavigationBarItem(icon: Icon(Icons.punch_clock_rounded), label: "Habitudes"),
         BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Agenda"),
         BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: "Recompenses"),
       ],

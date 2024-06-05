@@ -30,7 +30,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> _checkUser() async {
     DatabaseManager dbManager = DatabaseManager.instance;
     int userCount = await dbManager.queryRowCount(DatabaseManager.tableUsers);
-    print("nb d'users : $userCount");
     setState(() {
       _page = userCount == 0 ? const UserCreationScreen() : const HomePage();
     });
