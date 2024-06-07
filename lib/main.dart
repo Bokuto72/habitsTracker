@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habits_tracker/views/home.dart';
 import 'package:habits_tracker/views/user_creation.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'data/database.dart';
 
