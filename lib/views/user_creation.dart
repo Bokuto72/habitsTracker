@@ -58,7 +58,7 @@ class _UserCreationState extends State<UserCreationScreen> {
                   await databaseManager.insert(DatabaseManager.tableUsers, user.toMap());
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage(user: user))
+                    MaterialPageRoute(builder: (context) => HomePage())
                   );
                 }
               }, child: Text('Confirmer'))

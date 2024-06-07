@@ -55,7 +55,7 @@ class DatabaseManager {
           CREATE TABLE $tableCategories (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR(50) NOT NULL,
-            color VARCHAR(8) NOT NULL
+            color int NOT NULL
           )
           ''');
     await db.execute('''
@@ -123,6 +123,7 @@ class DatabaseManager {
   Future<void> update(String tableName, Map<String, dynamic> row) async {
     final db = await instance.database;
     int id = row['id'];
+    print("id = " + id.toString());
     await db.update(tableName, row, where: 'id = ?', whereArgs: [id]);
   }
 

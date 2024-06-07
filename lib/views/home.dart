@@ -13,7 +13,9 @@ import '../data/database.dart';
 import 'components/bottom_navbar.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, User? user});
+  const HomePage({super.key});
+
+  get user => null;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +35,14 @@ class _HomePageState extends State<HomePageContent> {
   DatabaseManager dbManager = DatabaseManager.instance;
 
   final _pageNavigation = [
-    //const DashboardPage(),
-    const TasksPage(),
+    TasksPage(),
     const HabitsPage(),
     const AgendaPage(),
     const RewardsPage()
   ];
 
-  // TODO
-  // Afficher le dashboard en haut;
-  // la page choisie par la navbar en bas.
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavbar, int>(

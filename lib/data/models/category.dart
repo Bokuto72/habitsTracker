@@ -10,5 +10,5 @@ class Category {
 
   final int? id;
   final String? name;
-  final Color? color;
+  final int? color;
 }

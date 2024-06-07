@@ -13,8 +13,8 @@ class User {
 
   final int? id;
   final String? pseudo;
-  final int? level;
-  final int? xp;
+  int? level;
+  int? xp;
   final int? health;
   final List<Reward>? rewards;
 
@@ -32,4 +32,5 @@ class User {
   String toString() {
     return 'User{id: $id, pseudo: $pseudo, level: $level, xp: $xp, health: $health}';
   }
+
 }
